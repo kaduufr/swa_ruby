@@ -17,8 +17,10 @@ module SWRobot
     def get_info name, type
         data = get_info_by_api name, type
         dataJSON = JSON.parse(data)
-        raise ArgumentError.new('Name wrong') if dataJSON['count'] == 0
-        # puts dataJSON['results'][0]['name']
+        if dataJSON['count'] == 0
+            puts '> Nome nao encontrado / Opção errada'
+            raise ArgumentError.new('Argument wrong') 
+        end
         films_array = get_title_at_all_films dataJSON['results'][0]['films']
         hw_name = get_homeworld_name dataJSON['results'][0]['homeworld']
         return {
